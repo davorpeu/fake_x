@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { SharedLogger } from '../SharedLogger';
+import { Card } from 'antd';
 
 interface PostCardProps {
     id: number;
@@ -10,14 +11,30 @@ interface PostCardProps {
 
 export const PostCard = ({ id, title, body, userName }: PostCardProps) => {
     return (
-        <div className="border p-4 mb-4 rounded">
+        <Card
+            title={title}
+            style={{
+                marginTop: 16, // Adds margin above the card (equivalent to mt-4 in Tailwind)
+                padding: 16,   // Adds internal padding to the card content
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', // Optional: subtle shadow for depth
+            }}
+        >
             <SharedLogger helloFrom="PostCard" />
-            <h2 className="text-xl font-bold">{title}</h2>
-            <p className="text-gray-600">By: {userName}</p>
-            <p>{body}</p>
-            <Link to={`/post/${id}`} className="text-blue-500 hover:underline">
+            <p style={{ color: '#666', marginBottom: 8 }}>
+                By: {userName}
+            </p>
+            <p style={{ marginBottom: 16 }}>{body}</p>
+            <Link
+                to={`/post/${id}`}
+                style={{
+                    color: '#1890ff', // Ant Design's default blue
+                    textDecoration: 'none',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.textDecoration = 'underline')}
+                onMouseLeave={(e) => (e.currentTarget.style.textDecoration = 'none')}
+            >
                 View Details
             </Link>
-        </div>
+        </Card>
     );
 };

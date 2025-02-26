@@ -4,6 +4,9 @@ import { fetchPost, fetchComments } from '../../features/posts/api/posts.Api';
 import { Post, Comment } from '../../features/posts/types/posts.types';
 import { CommentList } from '../../components/CommentList';
 import { SharedLogger } from '../../components/SharedLogger';
+import { Card, Spin, Typography, Space } from 'antd';
+
+const { Title, Paragraph } = Typography;
 
 export const PostDetailPage = () => {
     const { id } = useParams<{ id: string }>();
@@ -18,7 +21,7 @@ export const PostDetailPage = () => {
             try {
                 const [postData, commentsData] = await Promise.all([
                     fetchPost(id),
-                    fetchComments(id)
+                    fetchComments(id),
                 ]);
                 setPost(postData);
                 setComments(commentsData);
@@ -32,15 +35,44 @@ export const PostDetailPage = () => {
         loadPostData();
     }, [id]);
 
-    if (loading) return <p>Loading...</p>;
-    if (!post) return <p>Post not found</p>;
+    if (loading) {
+        return (
+            <div style={{ textAlign: 'center', padding: '50px 0' }}>
+                <Spin size="large" tip="Loading..." />
+            </div>
+        );
+    }
+
+    if (!post) {
+        return (
+            <div style={{ textAlign: 'center', padding: '50px 0' }}>
+                <Paragraph type="danger">Post not found</Paragraph>
+            </div>
+        );
+    }
 
     return (
-        <div className="container mx-auto p-4">
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: 24 }}>
             <SharedLogger helloFrom="PostDetailPage" />
-            <h1 className="text-2xl font-bold mb-4">{post.title}</h1>
-            <p>{post.body}</p>
-            <CommentList comments={comments} />
+            <Card
+                style={{
+                    borderRadius: 8,
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                }}
+            >
+                <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                    <Title level={2} style={{ marginBottom: 0 }}>
+                        {post.title}
+                    </Title>
+                    <Paragraph style={{ fontSize: 16, color: '#595959' }}>
+                        {post.body}
+                    </Paragraph>
+                    <div>
+                        <Title level={4}>Comments</Title>
+                        <CommentList comments={comments} />
+                    </div>
+                </Space>
+            </Card>
         </div>
     );
 };
