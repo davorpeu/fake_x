@@ -7,17 +7,20 @@ interface PostCardProps {
     title: string;
     body: string;
     userName: string;
+    className?: string;
 }
 
-export const PostCard = ({ id, title, body, userName }: PostCardProps) => {
+export const PostCard = ({ id, title, body, userName, className }: PostCardProps) => {
     return (
         <Card
             title={title}
             style={{
-                marginTop: 16, // Adds margin above the card (equivalent to mt-4 in Tailwind)
-                padding: 16,   // Adds internal padding to the card content
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)', // Optional: subtle shadow for depth
+                marginTop: 16,
+                padding: 16,
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                position: 'relative', // Added for proper z-index context
             }}
+            className={className} // Added className prop
         >
             <SharedLogger helloFrom="PostCard" />
             <p style={{ color: '#666', marginBottom: 8 }}>
@@ -26,9 +29,12 @@ export const PostCard = ({ id, title, body, userName }: PostCardProps) => {
             <p style={{ marginBottom: 16 }}>{body}</p>
             <Link
                 to={`/post/${id}`}
+                reloadDocument
                 style={{
-                    color: '#1890ff', // Ant Design's default blue
+                    color: '#1890ff',
                     textDecoration: 'none',
+                    position: 'relative',
+
                 }}
                 onMouseEnter={(e) => (e.currentTarget.style.textDecoration = 'underline')}
                 onMouseLeave={(e) => (e.currentTarget.style.textDecoration = 'none')}

@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchPost, fetchComments } from '../../features/posts/api/posts.Api';
 import { Post, Comment } from '../../features/posts/types/posts.types';
 import { CommentList } from '../../components/CommentList';
 import { SharedLogger } from '../../components/SharedLogger';
-import { Card, Spin, Typography, Space } from 'antd';
+import { Spin, Typography, Space, Button } from 'antd';
 
 const { Title, Paragraph } = Typography;
 
 export const PostDetailPage = () => {
     const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
     const [post, setPost] = useState<Post | null>(null);
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState(false);
@@ -37,7 +38,11 @@ export const PostDetailPage = () => {
 
     if (loading) {
         return (
-            <div style={{ textAlign: 'center', padding: '50px 0' }}>
+            <div style={{
+                padding: '32px 16px', // Match main container padding
+                height: '100vh',
+                backgroundColor: '#F7F9FC'
+            }}>
                 <Spin size="large" tip="Loading..." />
             </div>
         );
@@ -45,34 +50,79 @@ export const PostDetailPage = () => {
 
     if (!post) {
         return (
-            <div style={{ textAlign: 'center', padding: '50px 0' }}>
-                <Paragraph type="danger">Post not found</Paragraph>
+            <div style={{
+                padding: '32px 16px', // Match main container padding
+                backgroundColor: '#F7F9FC',
+                minHeight: '100vh'
+            }}>
+                <Paragraph type="danger" style={{ color: '#FF4D4F' }}>
+                    Post not found
+                </Paragraph>
             </div>
         );
     }
 
     return (
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: 24 }}>
+        <div style={{
+            maxWidth: 800,
+            margin: '0 auto',
+            padding: '32px 16px',
+            backgroundColor: '#F7F9FC',
+            minHeight: '100vh'
+        }}>
             <SharedLogger helloFrom="PostDetailPage" />
-            <Card
+            <div style={{
+                textAlign: 'left',
+                marginBottom: '16px' }}>
+                <Button
+                    onClick={() => navigate(-1)}
+                    style={{
+                        backgroundColor: '#FFFFFF',
+                        borderColor: '#E6ECF0',
+                        color: '#0F1419',
+                        borderRadius: '8px'
+                    }}
+                >
+                    ← Back
+                </Button>
+            </div>
+            <div
                 style={{
-                    borderRadius: 8,
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#FFFFFF',
+                    borderRadius: 12,
+                    padding: '24px',
+                    border: '1px solid #E6ECF0',
+                    marginBottom: '24px',
                 }}
             >
-                <Space direction="vertical" size="large" style={{ width: '100%' }}>
-                    <Title level={2} style={{ marginBottom: 0 }}>
+                <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+                    <Title
+                        level={2}
+                        style={{
+                            margin: 0,
+                            fontSize: '24px',
+                            fontWeight: 600,
+                            color: '#0F1419',
+                            textAlign: 'left'
+                        }}
+                    >
                         {post.title}
                     </Title>
-                    <Paragraph style={{ fontSize: 16, color: '#595959' }}>
+                    <Paragraph
+                        style={{
+                            fontSize: '16px',
+                            color: '#536471',
+                            lineHeight: '1.5',
+                            textAlign: 'left'
+                        }}
+                    >
                         {post.body}
                     </Paragraph>
-                    <div>
-                        <Title level={4}>Comments</Title>
-                        <CommentList comments={comments} />
-                    </div>
                 </Space>
-            </Card>
+            </div>
+            <div>
+                <CommentList comments={comments} />
+            </div>
         </div>
     );
 };
