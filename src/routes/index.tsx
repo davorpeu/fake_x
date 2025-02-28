@@ -1,13 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
-import { PostsPage } from '../pages/Posts';
-import { PostDetailPage } from '../pages/PostDetail';
+import {PostsPageContainer} from "../features/posts/page/PostPageContainer";
+import { PostDetailContainer} from '../features/posts/detail/PostDetailContainer';
 
 export const AppRoutes = () => {
     return (
         <Routes>
-            <Route path="/posts" element={<PostsPage />} />
-            <Route path="/post/:id" element={<PostDetailPage />} />
-            <Route path="/" element={<PostsPage />} />
+            <Route path="/posts" element={<PostsPageContainer />} />
+            <Route path="/post/:id" element={<PostDetailContainer />} />
+            <Route path="/" element={<PostsPageContainer />} />
         </Routes>
     );
 };
