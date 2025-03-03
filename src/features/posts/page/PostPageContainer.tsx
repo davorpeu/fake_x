@@ -3,24 +3,26 @@ import { FC } from 'react';
 import { usePosts } from '../hooks/usePosts';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { debounce } from 'lodash';
-import { Post } from "../types/posts.types";
+import {Post, User} from "../types/posts.types";
 import { PostsPage } from "./PostsPage";
+import {AutoCompleteProps} from "antd";
 
 export const PostsPageContainer: FC = () => {
+    const [users, setOptions] = useState<User[]>([]);
     const { posts, loading, searchTerm, setSearchTerm } = usePosts();
     const [visiblePosts, setVisiblePosts] = useState<Post[]>([]);
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [searchInputFocused, setSearchInputFocused] = useState(false);
-
     const observer = useRef<IntersectionObserver | null>(null);
     const POSTS_PER_PAGE = 5;
-
+    const Username = posts.map(({ userName }) => userName);
     const debouncedSetSearchTerm = useCallback(
-        debounce((value: string) => {
+      debounce((value: string) => {
             setSearchTerm(value);
             setPage(1);
             setVisiblePosts([]);
+            setOptions([])
         }, 300),
         [setSearchTerm]
     );
@@ -64,6 +66,7 @@ export const PostsPageContainer: FC = () => {
             setSearchInputFocused={setSearchInputFocused} // Ensure this is passed
             handleSearchChange={handleSearchChange}
             lastPostElementRef={lastPostElementRef}
+            users={users}
         />
     );
 };

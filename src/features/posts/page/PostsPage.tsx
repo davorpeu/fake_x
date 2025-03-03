@@ -1,19 +1,20 @@
-import { FC } from 'react';
-import { PostCard } from '../../../components/PostCard';
-import { SharedLogger } from '../../../components/SharedLogger';
-import { Input, Skeleton, Spin, Empty, FloatButton } from "antd";
-import { SearchOutlined, ArrowUpOutlined } from '@ant-design/icons';
-import { Post } from "../types/posts.types";
+import React, {FC} from 'react';
+import {PostCard} from '../../../components/PostCard';
+import {SharedLogger} from '../../../components/SharedLogger';
+import {Input, Skeleton, Spin, Empty, FloatButton, AutoComplete} from "antd";
+import {SearchOutlined, ArrowUpOutlined} from '@ant-design/icons';
+import {Post,User} from "../types/posts.types";
 
 interface PostsPageProps {
-    visiblePosts: Post[];
-    loading: boolean;
-    hasMore: boolean;
-    searchTerm: string;
-    searchInputFocused: boolean;
-    setSearchInputFocused: (focused: boolean) => void;
-    handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    lastPostElementRef: (node: HTMLDivElement | null) => void;
+    visiblePosts: Post[],
+    loading: boolean,
+    hasMore: boolean,
+    searchTerm: string,
+    searchInputFocused: boolean,
+    setSearchInputFocused: (focused: boolean) => void,
+    handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    lastPostElementRef: (node: HTMLDivElement | null) => void,
+    users: User[]
 }
 
 export const PostsPage: FC<PostsPageProps> = ({
@@ -24,7 +25,8 @@ export const PostsPage: FC<PostsPageProps> = ({
                                                   searchInputFocused,
                                                   setSearchInputFocused,
                                                   handleSearchChange,
-                                                  lastPostElementRef
+                                                  lastPostElementRef,
+                                                  users
                                               }) => {
     return (
         <div className="bg-gray-50 min-h-screen">
@@ -58,7 +60,21 @@ export const PostsPage: FC<PostsPageProps> = ({
                 </div>
 
                 <div className="mb-4">
-                    <Input
+
+                    <AutoComplete
+                        prefix={<SearchOutlined className={searchInputFocused ? "text-blue-500" : "text-gray-400"}/>}
+                        style={{width: 200}}
+                        placeholder="Search by name..."
+                        options={users}
+                        onSelect={handleSearchChange}
+                        onChange={handleSearchChange}
+                        onFocus={() => setSearchInputFocused(true)}
+                        onBlur={() => setSearchInputFocused(false)}
+                        className="rounded-lg shadow-md"
+                        size="middle"
+                        allowClear
+                    />
+                    {/*         <Input
                         prefix={<SearchOutlined className={searchInputFocused ? "text-blue-500" : "text-gray-400"}/>}
                         type="text"
                         placeholder="Search by user name..."
@@ -69,7 +85,7 @@ export const PostsPage: FC<PostsPageProps> = ({
                         className="rounded-lg shadow-md"
                         size="middle"
                         allowClear
-                    />
+                    />*/}
                 </div>
 
                 {loading ? (
