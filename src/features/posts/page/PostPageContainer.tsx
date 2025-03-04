@@ -18,6 +18,7 @@ export const PostsPageContainer: FC = () => {
     const POSTS_PER_PAGE = useRef(5).current;
     const Username = posts.map(({ userName }) => userName);
     const debouncedSetSearchTerm = useCallback(
+
       debounce((value: string) => {
             setSearchTerm(value);
             setPage(1);

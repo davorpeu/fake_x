@@ -68,7 +68,6 @@ export const PostsPage: FC<PostsPageProps> = ({
                         options={users}
                         onSearch={onSearch}
                         onSelect={handleSearchChange}
-                        onChange={handleSearchChange}
                         onFocus={() => setSearchInputFocused(true)}
                         onBlur={() => setSearchInputFocused(false)}
                         className="rounded-lg shadow-md"
