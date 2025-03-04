@@ -1,4 +1,4 @@
-// features/posts/page/PostsPageContainer.tsx
+
 import { FC } from 'react';
 import { usePosts } from '../hooks/usePosts';
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -35,9 +35,11 @@ export const PostsPageContainer: FC = () => {
 
         const filteredUsers = posts
             .filter(post => post.userName.toLowerCase().includes(value.toLowerCase()))
-            .map(post => ({ value: post.userName, label: post.userName }));
+            .map(post => ({ value: post.userName, label: post.userName  }));
 
-        // Get unique users
+        const filteredText = posts
+            .filter(post => post.body.toLowerCase().includes(value.toLowerCase()))
+            .map(post => ({ value: post.body, label: post.body + " message"  }));
         const uniqueMap = new Map();
         filteredUsers.forEach(user => {
             if (!uniqueMap.has(user.value)) {
@@ -83,7 +85,7 @@ export const PostsPageContainer: FC = () => {
             hasMore={hasMore}
             searchTerm={searchTerm}
             searchInputFocused={searchInputFocused}
-            setSearchInputFocused={setSearchInputFocused} // Ensure this is passed
+            setSearchInputFocused={setSearchInputFocused}
             handleSearchChange={handleSearchChange}
             lastPostElementRef={lastPostElementRef}
             users={users}

@@ -17,7 +17,7 @@ export const CommentList = ({ comments }: CommentListProps) => {
                 style={{
                     textAlign: 'left',
                     fontSize: '18px',
-                    color: '#1A91DA', // Blue accent for headers
+                    color: '#1A91DA',
                     marginBottom: '16px'
                 }}
             >
@@ -31,8 +31,8 @@ export const CommentList = ({ comments }: CommentListProps) => {
                             <Text
                                 type="secondary"
                                 style={{
-                                    fontSize: '13px', // Smaller for metadata
-                                    color: '#657786', // Muted gray
+                                    fontSize: '13px',
+                                    color: '#657786',
                                     display: 'block',
                                     marginBottom: '4px',
                                     textAlign: 'left'
@@ -44,8 +44,8 @@ export const CommentList = ({ comments }: CommentListProps) => {
                                 strong
                                 style={{
                                     textAlign: 'left',
-                                    fontSize: '15px', // Slightly larger for name
-                                    color: '#0F1419', // Darker for emphasis
+                                    fontSize: '15px',
+                                    color: '#0F1419',
                                     display: 'block',
                                     marginBottom: '8px',
                                 }}
@@ -56,9 +56,9 @@ export const CommentList = ({ comments }: CommentListProps) => {
                                 style={{
                                     textAlign: 'left',
                                     marginBottom: 0,
-                                    fontSize: '15px', // Readable body text
+                                    fontSize: '15px',
                                     color: '#0F1419',
-                                    lineHeight: '1.4', // Better spacing
+                                    lineHeight: '1.4',
                                 }}
                             >
                                 {comment.body}
@@ -66,8 +66,8 @@ export const CommentList = ({ comments }: CommentListProps) => {
                         </div>
                     </List.Item>
                 )}
-                split={true} // Enables dividers between items
-                locale={{ emptyText: 'No comments yet' }} // Custom message when empty
+                split={true}
+                locale={{ emptyText: 'No comments yet' }}
             />
         </div>
     );

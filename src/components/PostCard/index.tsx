@@ -18,9 +18,9 @@ export const PostCard = ({ id, title, body, userName, className }: PostCardProps
                 marginTop: 16,
                 padding: 16,
                 boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-                position: 'relative', // Added for proper z-index context
+                position: 'relative',
             }}
-            className={className} // Added className prop
+            className={className}
         >
             <SharedLogger helloFrom="PostCard" />
             <p style={{ color: '#666', marginBottom: 8 }}>

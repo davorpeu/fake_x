@@ -39,7 +39,8 @@ export const usePosts = () => {
     }, []);
 
     const filteredPosts = posts.filter(post =>
-        post.userName.toLowerCase().includes(searchTerm.toLowerCase())
+        post.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.body.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return { posts: filteredPosts, loading, searchTerm, setSearchTerm };

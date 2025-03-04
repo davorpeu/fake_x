@@ -12,10 +12,10 @@ interface PostsPageProps {
     searchTerm: string,
     searchInputFocused: boolean,
     setSearchInputFocused: (focused: boolean) => void,
-    handleSearchChange: (value: string) => void,  // Changed to accept string
+    handleSearchChange: (value: string) => void,
     lastPostElementRef: (node: HTMLDivElement | null) => void,
     users: User[],
-    onSearch: (value: string) => void  // Added new prop
+    onSearch: (value: string) => void
 }
 
 export const PostsPage: FC<PostsPageProps> = ({
