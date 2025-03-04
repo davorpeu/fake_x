@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
 import {PostCard} from '../../../components/PostCard';
 import {SharedLogger} from '../../../components/SharedLogger';
-import {Input, Skeleton, Spin, Empty, FloatButton, AutoComplete} from "antd";
+import {Skeleton, Spin, Empty, FloatButton, AutoComplete} from "antd";
 import {SearchOutlined, ArrowUpOutlined} from '@ant-design/icons';
-import {Post,User} from "../types/posts.types";
+import {Post, User} from "../types/posts.types";
 
 interface PostsPageProps {
     visiblePosts: Post[],
@@ -12,9 +12,10 @@ interface PostsPageProps {
     searchTerm: string,
     searchInputFocused: boolean,
     setSearchInputFocused: (focused: boolean) => void,
-    handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    handleSearchChange: (value: string) => void,  // Changed to accept string
     lastPostElementRef: (node: HTMLDivElement | null) => void,
-    users: User[]
+    users: User[],
+    onSearch: (value: string) => void  // Added new prop
 }
 
 export const PostsPage: FC<PostsPageProps> = ({
@@ -26,7 +27,8 @@ export const PostsPage: FC<PostsPageProps> = ({
                                                   setSearchInputFocused,
                                                   handleSearchChange,
                                                   lastPostElementRef,
-                                                  users
+                                                  users,
+                                                  onSearch
                                               }) => {
     return (
         <div className="bg-gray-50 min-h-screen">
@@ -60,12 +62,11 @@ export const PostsPage: FC<PostsPageProps> = ({
                 </div>
 
                 <div className="mb-4">
-
                     <AutoComplete
-                        prefix={<SearchOutlined className={searchInputFocused ? "text-blue-500" : "text-gray-400"}/>}
-                        style={{width: 200}}
+                        style={{ width: '100%' }}
                         placeholder="Search by name..."
                         options={users}
+                        onSearch={onSearch}
                         onSelect={handleSearchChange}
                         onChange={handleSearchChange}
                         onFocus={() => setSearchInputFocused(true)}
@@ -74,18 +75,6 @@ export const PostsPage: FC<PostsPageProps> = ({
                         size="middle"
                         allowClear
                     />
-                    {/*         <Input
-                        prefix={<SearchOutlined className={searchInputFocused ? "text-blue-500" : "text-gray-400"}/>}
-                        type="text"
-                        placeholder="Search by user name..."
-                        defaultValue={searchTerm}
-                        onChange={handleSearchChange}
-                        onFocus={() => setSearchInputFocused(true)}
-                        onBlur={() => setSearchInputFocused(false)}
-                        className="rounded-lg shadow-md"
-                        size="middle"
-                        allowClear
-                    />*/}
                 </div>
 
                 {loading ? (

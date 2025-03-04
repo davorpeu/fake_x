@@ -15,7 +15,7 @@ export const PostsPageContainer: FC = () => {
     const [hasMore, setHasMore] = useState(true);
     const [searchInputFocused, setSearchInputFocused] = useState(false);
     const observer = useRef<IntersectionObserver | null>(null);
-    const POSTS_PER_PAGE = 5;
+    const POSTS_PER_PAGE = useRef(5).current;
     const Username = posts.map(({ userName }) => userName);
     const debouncedSetSearchTerm = useCallback(
       debounce((value: string) => {
@@ -26,22 +26,41 @@ export const PostsPageContainer: FC = () => {
         }, 300),
         [setSearchTerm]
     );
+    const onSearch = useCallback((value: string) => {
+        if (!value) {
+            setOptions([]);
+            return;
+        }
 
-    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        debouncedSetSearchTerm(e.target.value);
+        const filteredUsers = posts
+            .filter(post => post.userName.toLowerCase().includes(value.toLowerCase()))
+            .map(post => ({ value: post.userName, label: post.userName }));
+
+        // Get unique users
+        const uniqueMap = new Map();
+        filteredUsers.forEach(user => {
+            if (!uniqueMap.has(user.value)) {
+                uniqueMap.set(user.value, user);
+            }
+        });
+
+        setOptions(Array.from(uniqueMap.values()));
+    }, [posts]);
+    const handleSearchChange = (value: string) => {
+        debouncedSetSearchTerm(value);
     };
 
     useEffect(() => {
         if (!loading) {
-            if (posts.length > 0) {
-                setVisiblePosts(posts.slice(0, page * POSTS_PER_PAGE));
-                setHasMore(page * POSTS_PER_PAGE < posts.length);
-            } else {
-                setVisiblePosts([]);
-                setHasMore(false);
+            const newVisiblePosts = posts.slice(0, page * POSTS_PER_PAGE);
+            const newHasMore = page * POSTS_PER_PAGE < posts.length;
+
+            if (JSON.stringify(newVisiblePosts) !== JSON.stringify(visiblePosts)) {
+                setVisiblePosts(newVisiblePosts);
+                setHasMore(newHasMore);
             }
         }
-    }, [posts, loading, page]);
+    }, [posts, loading, page, POSTS_PER_PAGE, visiblePosts]);
 
     const lastPostElementRef = useCallback((node: HTMLDivElement | null) => {
         if (loading) return;
@@ -67,6 +86,7 @@ export const PostsPageContainer: FC = () => {
             handleSearchChange={handleSearchChange}
             lastPostElementRef={lastPostElementRef}
             users={users}
+            onSearch={onSearch}
         />
     );
 };
