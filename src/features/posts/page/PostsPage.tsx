@@ -14,7 +14,7 @@ interface PostsPageProps {
     setSearchInputFocused: (focused: boolean) => void,
     handleSearchChange: (value: string) => void,
     lastPostElementRef: (node: HTMLDivElement | null) => void,
-    users: User[],
+    options: {value: string, label: string}[],
     onSearch: (value: string) => void
 }
 
@@ -27,7 +27,7 @@ export const PostsPage: FC<PostsPageProps> = ({
                                                   setSearchInputFocused,
                                                   handleSearchChange,
                                                   lastPostElementRef,
-                                                  users,
+                                                  options,
                                                   onSearch
                                               }) => {
     return (
@@ -64,8 +64,8 @@ export const PostsPage: FC<PostsPageProps> = ({
                 <div className="mb-4">
                     <AutoComplete
                         style={{ width: '100%' }}
-                        placeholder="Search by name..."
-                        options={users}
+                        placeholder="Search by name or post content..."
+                        options={options}
                         onSearch={onSearch}
                         onSelect={handleSearchChange}
                         onFocus={() => setSearchInputFocused(true)}
