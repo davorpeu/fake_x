@@ -17,6 +17,7 @@ export const PostsPageContainer: FC = () => {
 
     const debouncedSetSearchTerm = useCallback(
         debounce((value: string) => {
+
             setSearchTerm(value);
             setPage(1);
             setVisiblePosts([]);
@@ -55,6 +56,8 @@ export const PostsPageContainer: FC = () => {
 
         if (node) observer.current.observe(node);
     }, [loading, hasMore]);
+
+
 
     return (
         <PostsPage

@@ -31,9 +31,12 @@ export const PostsPage: FC<PostsPageProps> = ({
                                                   onSearch
                                               }) => {
     return (
-        <div className="bg-gray-50 min-h-screen">
+        <div className="bg-gray-50 min-h-screen min-w-screen" style={{
+            minWidth: '100%',
+
+        } }>
             <FloatButton.BackTop>
-                <div className="bg-blue-500 text-white p-2 rounded-full shadow-lg">
+                <div className="bg-blue-500 text-white p-2 ">
                     <ArrowUpOutlined/>
                 </div>
             </FloatButton.BackTop>
@@ -131,7 +134,7 @@ export const PostsPage: FC<PostsPageProps> = ({
                         ) : (
                             <Empty
                                 description="No posts found"
-                                className="bg-white rounded-lg p-4 shadow-md"
+                                className="bg-white rounded-lg p-4 space-y-3 shadow-md"
                             />
                         )}
                     </div>
