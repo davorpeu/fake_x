@@ -20,7 +20,7 @@ export const PostsPageContainer: FC = () => {
 
             setSearchTerm(value);
             setPage(1);
-            setVisiblePosts([]);
+          //  setVisiblePosts([]);
         }, 300),
         [setSearchTerm]
     );
