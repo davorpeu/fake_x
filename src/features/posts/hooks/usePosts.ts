@@ -44,7 +44,8 @@ export const usePosts = () => {
         if (searchTerm) {
             const filtered = allPosts.filter(post =>
                 post.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                post.body.toLowerCase().includes(searchTerm.toLowerCase())
+                post.body.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                post.title.toLowerCase().includes(searchTerm.toLowerCase())
             );
             setPosts(filtered);
         } else {
@@ -53,25 +54,43 @@ export const usePosts = () => {
     }, [searchTerm, allPosts]);
 
     const fetchSuggestions = useCallback((query: string) => {
-        // Generate suggestions from all posts and users
         if (!query) return [];
 
-        // User suggestions
+        console.log('Search Query:', query);
+
+        const normalizedQuery = query.toLowerCase().replace(/\s+/g, '');
+
         const userSuggestions = users
-            .filter(user => user.name.toLowerCase().includes(query.toLowerCase()))
+            .filter(user => user.name.toLowerCase().replace(/\s+/g, '').includes(normalizedQuery))
             .map(user => ({
                 value: user.name,
-                label: `${user.name} (User)`
+                label: `${user.name} (User)`,
+                type: 'user'
             }));
 
-        // Post content suggestions
         const postSuggestions = allPosts
-            .filter(post => post.body.toLowerCase().includes(query.toLowerCase()))
-            .slice(0, 5) // Limit to 5 suggestions for performance
+            .filter(post => {
+                const cleanBody = post.body.toLowerCase().replace(/\s+/g, '');
+                const cleanTitle = post.title.toLowerCase().replace(/\s+/g, '');
+
+                console.log('Post Body (clean):', cleanBody);
+                console.log('Post Title (clean):', cleanTitle);
+                console.log('Normalized Query:', normalizedQuery);
+                console.log('Body Includes Query:', cleanBody.includes(normalizedQuery));
+                console.log('Title Includes Query:', cleanTitle.includes(normalizedQuery));
+
+                return cleanBody.includes(normalizedQuery) || cleanTitle.includes(normalizedQuery);
+            })
+            .slice(0, 5)
             .map(post => ({
-                value: post.body.substring(0, 30) + "...",
-                label: `${post.body.substring(0, 30)}... (Post)`
+                value: post.body,
+                label: `${post.title.substring(0, 30)}... (Post)`,
+                type: 'post',
+                fullTitle: post.title
             }));
+
+        console.log('User Suggestions:', userSuggestions);
+        console.log('Post Suggestions:', postSuggestions);
 
         return [...userSuggestions, ...postSuggestions];
     }, [users, allPosts]);
