@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchPost, fetchComments } from '../api/posts.Api';
-import { Post, Comment } from '../types/posts.types';
-import { PostDetail } from './PostDetail';
+import { fetchPost, fetchComments } from '../api/post.Api';
+import { Post, Comment } from '../../../types/posts.types';
+import { PostPage } from './PostPage';
 
-export const PostDetailContainer = () => {
+export const PostContainer = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const [post, setPost] = useState<Post | null>(null);
@@ -35,7 +35,7 @@ export const PostDetailContainer = () => {
     const handleBack = () => navigate(-1);
 
     return (
-        <PostDetail
+        <PostPage
             post={post}
             comments={comments}
             loading={loading}

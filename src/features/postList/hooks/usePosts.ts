@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { fetchPosts, fetchUsers } from '../api/posts.Api';
-import { Post, User } from '../types/posts.types';
+import { Post, User } from '../../../types/posts.types';
 
 interface PostWithUser extends Post {
-    userName: string;
 }
 
 export const usePosts = () => {

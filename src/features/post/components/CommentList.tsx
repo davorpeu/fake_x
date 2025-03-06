@@ -1,5 +1,5 @@
-import { Comment as CommentType } from '../../features/posts/types/posts.types';
-import { SharedLogger } from '../SharedLogger';
+import { Comment as CommentType } from '../../../types/posts.types';
+import { SharedLogger } from '../../../components/SharedLogger';
 import { List, Typography  } from 'antd';
 
 const { Text, Paragraph, Title } = Typography;

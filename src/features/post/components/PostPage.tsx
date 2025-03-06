@@ -1,5 +1,5 @@
-import { Post, Comment } from '../../types/posts.types';
-import { CommentList } from '../../../components/CommentList';
+import {Post, Comment} from '../../../types/posts.types'
+import { CommentList } from './CommentList';
 import { SharedLogger } from '../../../components/SharedLogger';
 import { Spin, Typography, Space, Button } from 'antd';
 
@@ -12,7 +12,7 @@ interface PostDetailProps {
     onBack: () => void;
 }
 
-export const PostDetail = ({ post, comments, loading, onBack }: PostDetailProps) => {
+export const PostPage = ({ post, comments, loading, onBack }: PostDetailProps) => {
     if (loading) {
         return (
             <div style={{

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { SharedLogger } from '../SharedLogger';
+import { SharedLogger } from '../../../components/SharedLogger';
 import { Card } from 'antd';
 
 interface PostCardProps {

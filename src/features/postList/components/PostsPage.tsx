@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
-import {PostCard} from '../../../components/PostCard';
+import {PostCard} from './PostCard';
 import {SharedLogger} from '../../../components/SharedLogger';
 import {Skeleton, Spin, Empty, FloatButton, AutoComplete} from "antd";
-import {SearchOutlined, ArrowUpOutlined} from '@ant-design/icons';
-import {Post, User} from "../types/posts.types";
+import { ArrowUpOutlined} from '@ant-design/icons';
+import {Post} from "../../../types/posts.types";
 
 interface PostsPageProps {
     visiblePosts: Post[],
@@ -22,8 +22,6 @@ export const PostsPage: FC<PostsPageProps> = ({
                                                   visiblePosts,
                                                   loading,
                                                   hasMore,
-                                                  searchTerm,
-                                                  searchInputFocused,
                                                   setSearchInputFocused,
                                                   handleSearchChange,
                                                   lastPostElementRef,
