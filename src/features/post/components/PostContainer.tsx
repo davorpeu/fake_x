@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { fetchPost, fetchComments } from '../api/post.Api';
-import { Post, Comment } from '../../../types/posts.types';
+import { Post, Comment } from '../types/post.types';
 import { PostPage } from './PostPage';
 
 export const PostContainer = () => {

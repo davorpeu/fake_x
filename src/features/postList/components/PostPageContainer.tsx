@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { usePosts } from '../hooks/usePosts';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { debounce } from 'lodash';
-import { Post } from "../../../types/posts.types";
+import { Post } from "../types/postList.types";
 import { PostsPage } from "./PostsPage";
 
 export const PostsPageContainer: FC = () => {

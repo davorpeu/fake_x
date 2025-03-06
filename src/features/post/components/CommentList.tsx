@@ -1,4 +1,4 @@
-import { Comment as CommentType } from '../../../types/posts.types';
+import { Comment as CommentType } from '../types/post.types';
 import { SharedLogger } from '../../../components/SharedLogger';
 import { List, Typography  } from 'antd';
 

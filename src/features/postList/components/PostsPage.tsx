@@ -3,7 +3,7 @@ import {PostCard} from './PostCard';
 import {SharedLogger} from '../../../components/SharedLogger';
 import {Skeleton, Spin, Empty, FloatButton, AutoComplete} from "antd";
 import { ArrowUpOutlined} from '@ant-design/icons';
-import {Post} from "../../../types/posts.types";
+import {Post} from "../types/postList.types";
 
 interface PostsPageProps {
     visiblePosts: Post[],

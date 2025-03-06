@@ -1,4 +1,4 @@
-import {Post, Comment} from '../../../types/posts.types'
+import {Post, Comment} from '../types/post.types'
 import { CommentList } from './CommentList';
 import { SharedLogger } from '../../../components/SharedLogger';
 import { Spin, Typography, Space, Button } from 'antd';
